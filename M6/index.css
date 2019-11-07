@@ -1,0 +1,17 @@
+/*#window {
+    display: flex;
+    border: solid;
+    align-items: center;
+    justify-content: center;
+    justify-items: center; 
+    justify-self: center; 
+    height: 100%;
+}
+#form {
+    border: solid;
+    padding: 40px;
+    padding-top: 25px;
+}
+#form input {
+    border: double;
+}*/
