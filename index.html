@@ -10,7 +10,7 @@
     <body>
         <div class="container-fluid space"></div>
         <div id="container-form" class="container">
-            <form id="form" method="post" action="#">
+            <form id="form" onsubmit="return loadGame();" method="post" action="#">
                 <div id="titol-form">
                     <h2 id="titol">OTHELLO</h2>
                 </div>
@@ -23,14 +23,14 @@
                     <input id="nomblanca" class="form-control" type="text" name="jblanques" required>
                 </div>
                 <div class="form-group">
-                    <label for="my-select">Mida Taulell</label>
-                    <select id="my-select" class="form-control" name="mida">
+                    <label for="mida">Mida Taulell</label>
+                    <select id="mida" class="form-control" name="mida">
                         <option>8X8</option>
                         <option>10X10</option>
                         <option>16X16</option>
                     </select>
                 </div>
-                <input id="submit" class="form-control" type="submit" value="Enviar">
+                <input id="submit" class="form-control" type="submit" value="Començar Partida">
             </form>
         </div>
         <div class="container-fluid space"></div>

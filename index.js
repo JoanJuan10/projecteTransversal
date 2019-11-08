@@ -1,0 +1,5 @@
+function loadGame() {
+    
+
+    return false;
+}
