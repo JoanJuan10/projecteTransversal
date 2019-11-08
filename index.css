@@ -1,17 +1,30 @@
-/*#window {
-    display: flex;
-    border: solid;
-    align-items: center;
-    justify-content: center;
-    justify-items: center; 
-    justify-self: center; 
-    height: 100%;
+.space {
+    /*border: solid;*/
+    height: 114px;
+}
+#container-form {
+    /*border: solid;*/
+    height: 530px;
+}
+#titol-form {
+    margin-top: 10px;
+    margin-bottom: 16px;
+    margin-right: 10px;
+    margin-left: 10px;
+    text-align: center;
 }
 #form {
     border: solid;
-    padding: 40px;
-    padding-top: 25px;
+    padding: 53px;
+    padding-top: 10px;
 }
-#form input {
-    border: double;
-}*/
+#submit {
+    background-color: #33DF0C;
+    border: none;
+    color: black;
+    font-weight: 800;
+}
+#submit:hover {
+    background-color: #1C7807;
+    color: white;
+}
