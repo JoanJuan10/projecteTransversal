@@ -1,15 +1,16 @@
 .space {
-    /*border: solid;*/
+    border: solid;
     height: 114px;
 }
 #titol {
     font-size: 4rem;
 }
 #container-form {
-    /*border: solid;*/
+    border: solid;
     height: 530px;
     width: 55%;
     margin: 0 auto;
+    display: none;
 
 }
 #titol-form {
@@ -37,3 +38,19 @@
     background-color: #1C7807;
     color: white;
 }
+
+#tablero {
+    border: solid;
+    height: 450px;
+    margin-bottom: 12px;
+}
+#marcador {
+    border: solid;
+    height: 85px;
+}
+
+
+
+
+
+
