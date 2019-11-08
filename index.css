@@ -2,9 +2,15 @@
     /*border: solid;*/
     height: 114px;
 }
+#titol {
+    font-size: 4rem;
+}
 #container-form {
     /*border: solid;*/
     height: 530px;
+    width: 55%;
+    margin: 0 auto;
+
 }
 #titol-form {
     margin-top: 10px;
@@ -16,13 +22,16 @@
 #form {
     border: solid;
     padding: 53px;
-    padding-top: 10px;
+    padding-top: 40px;
+    height: 100%;
 }
 #submit {
     background-color: #33DF0C;
     border: none;
     color: black;
     font-weight: 800;
+    width: 50%;
+    margin: 0 auto;
 }
 #submit:hover {
     background-color: #1C7807;
