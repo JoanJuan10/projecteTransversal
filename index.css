@@ -34,19 +34,48 @@
     width: 50%;
     margin: 0 auto;
 }
+
 #submit:hover {
     background-color: #1C7807;
     color: white;
 }
 
-#tablero {
+#tablero table {
+    margin: 0 auto;
+    width: 450px;
+}
+
+#tablero{
     border: solid;
-    height: 450px;
     margin-bottom: 12px;
+}
+
+td {
+    border: solid;
+    width: 50px;
+    height: 50px;
+    background-color: rgb(33, 236, 33);
+    text-align: center;
+}
+.blanc {
+    width: 50px;
+    height: 50px;
+}
+.negre {
+    width: 44px;
+    height: 44px;
+}
+
+#container-marcador {
+    border: solid;
+    height: 100px;
 }
 #marcador {
     border: solid;
-    height: 85px;
+    height: 95px;
+    background-color: rgb(70, 135, 155);
+    width: 50%;
+    
 }
 
 
