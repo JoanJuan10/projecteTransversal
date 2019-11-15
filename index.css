@@ -52,8 +52,8 @@
 
 td {
     border: solid;
-    width: 50px;
-    height: 50px;
+    width: 55px;
+    height: 55px;
     background-color: rgb(33, 236, 33);
     text-align: center;
 }
@@ -62,17 +62,17 @@ td {
     height: 50px;
 }
 
-#container-marcador {
+#info {
     border: solid;
-    height: 100px;
+    height: 45px;
 }
-#marcador {
+#marcador-blanc {
     border: solid;
-    height: 95px;
-    background-color: rgb(70, 135, 155);
-    width: 50%;
-    
 }
+#marcador-negre {
+    border: solid;
+}
+
 
 
 
