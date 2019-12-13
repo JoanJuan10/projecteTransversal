@@ -25,9 +25,9 @@
                 <div class="form-group">
                     <label for="mida">Mida Taulell</label>
                     <select id="mida" class="form-control" name="mida">
-                        <option>8X8</option>
-                        <option>10X10</option>
-                        <option>16X16</option>
+                        <option value=8>8X8</option>
+                        <option value=10>10X10</option>
+                        <option value=16>16X16</option>
                     </select>
                 </div>
                 <input id="submit" class="form-control" type="submit" value="Començar Partida">
@@ -36,11 +36,13 @@
         
         
         <div id="tablero" class="container">
-            <div id="marcador-blanc" class="container">
             
+            <div id="marcador-negre-container" class="container">
+                <h1 id="marcador-negre">2</h1>
+                <h2 id="nom-negre">Jugador2</h2>
             </div>
-            <table>
-                <tr><td></td>
+            <table id="taula">
+                <!--<tr><td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -111,17 +113,18 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                </tr>
+                </tr>-->
                 
                 
             </table>
-            <div id="marcador-negre" class="container">
-                
+            <div id="marcador-blanc-container" class="container">
+                <h1 id="marcador-blanc">2</h1>
+                <h2 id="nom-blanc">Jugador1</h2>
             </div>
         </div>
         
         <div id="info" class="container">
-            
+            <h3>Es el torn de X</h3>
         </div>
         <!--<div id="main_container">
             <div id="window">
