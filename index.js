@@ -61,16 +61,5 @@ function loadGame() {
         
     }
     return false;
-
-
-    /*for (let i = 0; i < $mida; i++) {
-        document.getElementById('taula').innerHTML += "<tr>";
-        for (let j = 0; j < $mida; j++) {
-            document.getElementById('taula').innerHTML += "<td></td>";
-        }
-        document.getElementById('taula').innerHTML += "</tr>";
-    }*/
-    
-
     
 }
