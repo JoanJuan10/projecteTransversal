@@ -47,7 +47,6 @@
 
 #tablero table {
     margin: 0 auto;
-    width: 450px;
 }
 
 #tablero{
@@ -55,13 +54,13 @@
     display: none;
     justify-content: center;
     align-items: center;
+    margin-top: 50px;
     margin-bottom: 12px;
 }
 
 td {
     border: solid;
     width: 55px;
-    height: 55px;
     background-color: rgb(33, 236, 33);
     text-align: center;
 }
@@ -90,10 +89,3 @@ td {
     width: 20%;
     /*border: solid;*/
 }
-
-
-
-
-
-
-
