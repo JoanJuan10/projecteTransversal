@@ -1,32 +1,29 @@
 function loadGame() {
-    var jugadorNegre = document.getElementById('nomnegre').value;
-    var jugadorBlanc = document.getElementById('nomblanca').value;
+    $mida = document.getElementById('mida').value;
+    $jugadorNegre = document.getElementById('nomnegre').value;
+    $jugadorBlanc = document.getElementById('nomblanca').value;
     var marcadorBlanc = 2;
     var marcadorNegre = 2;
-    var mida = document.getElementById('mida').value;
-    var width;
-    var height;
-    mida = parseInt(mida);
+    var tornActual = false; // true = blanc , false = negre;
+    var medida;
+    $mida = parseInt($mida);
 
-    switch(mida){
+    switch($mida){
 
         case 8:
-            width = 558;
-            height = 558;
+            medida = 558;
             break;
         case 10:
-            width = 520;
-            height = 520;
+            medida = 520;
             break;
         case 16:
-            width = 640;
-            height = 640;
+            medida = 640;
             break;
     }
 
-    console.log(jugadorNegre);
-    console.log(jugadorBlanc);
-    console.log(mida);
+    console.log($jugadorNegre);
+    console.log($jugadorBlanc);
+    console.log($mida);
 
     document.getElementById('espai').style.display = 'none';
     document.getElementById('tablero').style.display = 'flex';
@@ -34,32 +31,98 @@ function loadGame() {
     document.getElementById('info').style.display = 'block';
     document.getElementById('container-form').style.display = 'none';
 
-    document.getElementById('nom-blanc').innerHTML = jugadorBlanc;
-    document.getElementById('nom-negre').innerHTML = jugadorNegre;
+    document.getElementById('nom-blanc').innerHTML = $jugadorBlanc;
+    document.getElementById('nom-negre').innerHTML = $jugadorNegre;
 
     var tbl = document.getElementById('taula');
     var stl = document.createAttribute('style');
-    stl.value = "width: " + width + "px; height: " + height + "px;";
+    stl.value = "width: " + medida + "px; height: " + medida + "px;";
     tbl.setAttributeNode(stl);
 
-    for (let i = 0; i < mida; i++) {
+    for (let i = 0; i < $mida; i++) {
         var tr = document.createElement("tr");
         var attr = document.createAttribute('id');
         attr.value = 'row' + (i + 1);
         tr.setAttributeNode(attr);
-        console.log(tr);
         document.getElementById('taula').appendChild(tr);
         var cel = 1;
-        for (let j = 0; j < mida; j++) {
+        for (let j = 0; j < $mida; j++) {
             var td = document.createElement("td");
             var attr = document.createAttribute('id');
-            attr.value = 'cel' + cel;
+            attr.value = (i + 1) + '-' + (j + 1);
             td.setAttributeNode(attr);
-            console.log(td);
+            $(td).attr('class', 'casilla');
             document.getElementById('row' + (i + 1)).appendChild(td);
+            
         }
         
     }
+
+    $('.casilla').click(function (e) { 
+        comprobarCasilla(this);
+        /*if (comprobarCasilla(this)) {
+            colocarCasilla(this);
+        }
+        else {
+            $(this).attr('style', 'background-color: red;');
+        }
+        setTimeout(function () {
+            $(this).attr('style', 'background-color: rgb(33, 236, 33);');
+        }, 1500);*/
+    });
+
+    play();
     return false;
     
+}
+
+function play(){
+    if ($mida == 8) {
+        $("#4-4").attr('style', 'background-color: white');
+        $("#4-5").attr('style', 'background-color: black');
+        $("#5-4").attr('style', 'background-color: black');
+        $("#5-5").attr('style', 'background-color: white');
+
+        $("#4-4").unbind();
+        $("#4-5").unbind();
+        $("#5-4").unbind();
+        $("#5-5").unbind();
+        
+    }
+    else if($mida == 10){
+        $("#5-5").attr('style', 'background-color: white');
+        $("#5-6").attr('style', 'background-color: black');
+        $("#6-5").attr('style', 'background-color: black');
+        $("#6-6").attr('style', 'background-color: white');
+
+        $("#5-5").unbind();
+        $("#5-6").unbind();
+        $("#6-5").unbind();
+        $("#6-6").unbind();
+    }
+    else if($mida == 16){
+        $("#8-8").attr('style', 'background-color: white');
+        $("#8-9").attr('style', 'background-color: black');
+        $("#9-8").attr('style', 'background-color: black');
+        $("#9-9").attr('style', 'background-color: white');
+
+        $("#8-8").unbind();
+        $("#8-9").unbind();
+        $("#9-8").unbind();
+        $("#9-9").unbind();
+    }
+    $('#nomTorn').text($jugadorNegre);
+}
+function comprobarCasilla (casella) {
+    var pos1 = $(casella).attr('id').charAt(0);
+    var pos2 = $(casella).attr('id').charAt(2);
+    console.log(pos1);
+    console.log(pos2);
+    
+    // comprobar dreta
+    // comprobar esquerra
+    // comprobar dalt
+    // comprobar sota
+    // comprobar diagonals
+
 }
