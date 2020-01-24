@@ -4,7 +4,7 @@ function loadGame() {
     $jugadorBlanc = document.getElementById('nomblanca').value;
     var marcadorBlanc = 2;
     var marcadorNegre = 2;
-    var tornActual = false; // true = blanc , false = negre;
+    $tornActual = false; // true = blanc , false = negre;
     var medida;
     $mida = parseInt($mida);
 
@@ -78,10 +78,10 @@ function loadGame() {
 
 function play(){
     if ($mida == 8) {
-        $("#4-4").attr('style', 'background-color: white');
-        $("#4-5").attr('style', 'background-color: black');
-        $("#5-4").attr('style', 'background-color: black');
-        $("#5-5").attr('style', 'background-color: white');
+        $("#4-4").attr('class', 'blanc');
+        $("#4-5").attr('class', 'negre');
+        $("#5-4").attr('class', 'negre');
+        $("#5-5").attr('class', 'blanc');
 
         $("#4-4").unbind();
         $("#4-5").unbind();
@@ -90,10 +90,10 @@ function play(){
         
     }
     else if($mida == 10){
-        $("#5-5").attr('style', 'background-color: white');
-        $("#5-6").attr('style', 'background-color: black');
-        $("#6-5").attr('style', 'background-color: black');
-        $("#6-6").attr('style', 'background-color: white');
+        $("#5-5").attr('class', 'blanc');
+        $("#5-6").attr('class', 'negre');
+        $("#6-5").attr('class', 'negre');
+        $("#6-6").attr('class', 'blanc');
 
         $("#5-5").unbind();
         $("#5-6").unbind();
@@ -101,10 +101,10 @@ function play(){
         $("#6-6").unbind();
     }
     else if($mida == 16){
-        $("#8-8").attr('style', 'background-color: white');
-        $("#8-9").attr('style', 'background-color: black');
-        $("#9-8").attr('style', 'background-color: black');
-        $("#9-9").attr('style', 'background-color: white');
+        $("#8-8").attr('class', 'blanc');
+        $("#8-9").attr('class', 'negre');
+        $("#9-8").attr('class', 'negre');
+        $("#9-9").attr('class', 'blanc');
 
         $("#8-8").unbind();
         $("#8-9").unbind();
@@ -114,15 +114,40 @@ function play(){
     $('#nomTorn').text($jugadorNegre);
 }
 function comprobarCasilla (casella) {
-    var pos1 = $(casella).attr('id').charAt(0);
-    var pos2 = $(casella).attr('id').charAt(2);
-    console.log(pos1);
-    console.log(pos2);
     
-    // comprobar dreta
-    // comprobar esquerra
-    // comprobar dalt
-    // comprobar sota
-    // comprobar diagonals
+    //guardem la coordenada x i y de la casella clicada
+    var x = $(casella).attr('id').charAt(0);
+    var y = $(casella).attr('id').charAt(2);
+    var movimentValid = false;
+    console.log(x);
+    console.log(y);
+    
+    var pieza = ($tornActual) ? 'blanc' : 'negre';
+    var piezaContraria = (pieza == 'blanc') ? 'negre' : 'blanc';
 
+    for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+            var comprobaFila = parseInt(x) + i;
+            var comprobaColumna = parseInt(y) + j;
+
+            if ($('#' + comprobaFila + "-" + comprobaColumna).attr('class') == piezaContraria) {
+                comprobaFila += i;
+                comprobaColumna += j;
+                var numPiezas = 0;
+
+                while (comprobaFila >= 1 && comprobaFila < $mida && comprobaColumna >= 1 && comprobaColumna < $mida) {
+                    numPiezas++;
+                    if ($('#' + comprobaFila + "-" + comprobaColumna).attr('class') == pieza) {
+                        movimentValid = true;
+                    }
+                    comprobaFila += i;
+                    comprobaColumna += j;
+                }
+            }
+            
+        }
+        
+    }
+    console.log(movimentValid);
+    
 }
