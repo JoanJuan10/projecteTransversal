@@ -2,8 +2,8 @@ function loadGame() {
     $mida = document.getElementById('mida').value;
     $jugadorNegre = document.getElementById('nomnegre').value;
     $jugadorBlanc = document.getElementById('nomblanca').value;
-    var marcadorBlanc = 2;
-    var marcadorNegre = 2;
+    $marcadorBlanc = 2;
+    $marcadorNegre = 2;
     $tornActual = false; // true = blanc , false = negre;
     var medida;
     $mida = parseInt($mida);
@@ -134,6 +134,9 @@ function comprobarCasilla (casella) {
                         for (let l = 1; l <= numPiezas; l++) {
                             $('#' + (parseInt(x) + (i * l)) + '-' + (parseInt(y) + (j * l))).attr('class', pieza);
                         }
+                        $(($tornActual) ? '#marcador-blanc' : '#marcador-negre').text(($tornActual) ? $marcadorBlanc + numPiezas : $marcadorNegre + numPiezas);
+                        
+                        
                     }
                     comprobaFila += i;
                     comprobaColumna += j;
@@ -143,7 +146,11 @@ function comprobarCasilla (casella) {
         }
         
     }
-    if (!movimentValid) {
+    if (movimentValid) {
+        $tornActual = ($tornActual) ? false : true;
+        $('#nomTorn').text(($tornActual) ? $jugadorBlanc : $jugadorNegre);
+    }
+    else {
         $(casella).attr('class', 'vermell');
         $(casella).unbind();
         setTimeout(function () {
