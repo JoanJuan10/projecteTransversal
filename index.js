@@ -60,15 +60,6 @@ function loadGame() {
 
     $('.casilla').click(function (e) { 
         comprobarCasilla(this);
-        /*if (comprobarCasilla(this)) {
-            colocarCasilla(this);
-        }
-        else {
-            $(this).attr('style', 'background-color: red;');
-        }
-        setTimeout(function () {
-            $(this).attr('style', 'background-color: rgb(33, 236, 33);');
-        }, 1500);*/
     });
 
     play();
@@ -139,6 +130,10 @@ function comprobarCasilla (casella) {
                     numPiezas++;
                     if ($('#' + comprobaFila + "-" + comprobaColumna).attr('class') == pieza) {
                         movimentValid = true;
+                        $(casella).attr('class', pieza);
+                        for (let l = 1; l <= numPiezas; l++) {
+                            $('#' + (parseInt(x) + (i * l)) + '-' + (parseInt(y) + (j * l))).attr('class', pieza);
+                        }
                     }
                     comprobaFila += i;
                     comprobaColumna += j;
@@ -148,6 +143,15 @@ function comprobarCasilla (casella) {
         }
         
     }
-    console.log(movimentValid);
+    if (!movimentValid) {
+        $(casella).attr('class', 'vermell');
+        $(casella).unbind();
+        setTimeout(function () {
+            $(casella).attr('class', 'casella');
+            $(casella).click(function (e) { 
+                comprobarCasilla(this);
+            });
+        }, 1500);
+    }
     
 }
