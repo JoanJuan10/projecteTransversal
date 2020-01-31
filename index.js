@@ -107,8 +107,9 @@ function play(){
 function comprobarCasilla (casella) {
     
     //guardem la coordenada x i y de la casella clicada
-    var x = $(casella).attr('id').charAt(0);
-    var y = $(casella).attr('id').charAt(2);
+    var posicions = $(casella).attr('id').split("-");
+    var x = posicions[0];
+    var y = posicions[1];
     var movimentValid = false;
     console.log(x);
     console.log(y);
@@ -126,15 +127,20 @@ function comprobarCasilla (casella) {
                 comprobaColumna += j;
                 var numPiezas = 0;
 
+                /**
+                 * @TODO Modificar while para que pare cuando encuentre la primera pieza
+                 */
                 while (comprobaFila >= 1 && comprobaFila < $mida && comprobaColumna >= 1 && comprobaColumna < $mida) {
                     numPiezas++;
                     if ($('#' + comprobaFila + "-" + comprobaColumna).attr('class') == pieza) {
                         movimentValid = true;
                         $(casella).attr('class', pieza);
+                        $(casella).unbind();
                         for (let l = 1; l <= numPiezas; l++) {
                             $('#' + (parseInt(x) + (i * l)) + '-' + (parseInt(y) + (j * l))).attr('class', pieza);
                         }
-                        $(($tornActual) ? '#marcador-blanc' : '#marcador-negre').text(($tornActual) ? $marcadorBlanc + numPiezas : $marcadorNegre + numPiezas);
+                        $('#marcador-blanc').text($('.blanc').length);
+                        $('#marcador-negre').text($('.negre').length);
                         
                         
                     }
@@ -158,7 +164,7 @@ function comprobarCasilla (casella) {
             $(casella).click(function (e) { 
                 comprobarCasilla(this);
             });
-        }, 1500);
+        }, 500);
     }
     
 }
