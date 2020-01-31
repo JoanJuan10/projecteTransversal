@@ -127,13 +127,22 @@ function comprobarCasilla (casella) {
                 comprobaColumna += j;
                 var numPiezas = 0;
 
+                var movimentFet = false;
+                var verdTrobat = false;
+
                 /**
                  * @TODO Modificar while para que pare cuando encuentre la primera pieza
                  */
-                while (comprobaFila >= 1 && comprobaFila < $mida && comprobaColumna >= 1 && comprobaColumna < $mida) {
+                while (comprobaFila >= 1 && comprobaFila <= $mida && comprobaColumna >= 1 && comprobaColumna <= $mida && !movimentFet) {
                     numPiezas++;
-                    if ($('#' + comprobaFila + "-" + comprobaColumna).attr('class') == pieza) {
+                    // Comprobem que una de les peçes no es verda. Evitant que es pintin caselles adicionals
+                    if ($('#' + comprobaFila + "-" + comprobaColumna).attr('class') == 'casilla') {
+                        verdTrobat = true;
+                    }
+
+                    if ($('#' + comprobaFila + "-" + comprobaColumna).attr('class') == pieza && !verdTrobat) {
                         movimentValid = true;
+                        
                         $(casella).attr('class', pieza);
                         $(casella).unbind();
                         for (let l = 1; l <= numPiezas; l++) {
@@ -142,7 +151,7 @@ function comprobarCasilla (casella) {
                         $('#marcador-blanc').text($('.blanc').length);
                         $('#marcador-negre').text($('.negre').length);
                         
-                        
+                        movimentFet = true;
                     }
                     comprobaFila += i;
                     comprobaColumna += j;
@@ -160,7 +169,7 @@ function comprobarCasilla (casella) {
         $(casella).attr('class', 'vermell');
         $(casella).unbind();
         setTimeout(function () {
-            $(casella).attr('class', 'casella');
+            $(casella).attr('class', 'casilla');
             $(casella).click(function (e) { 
                 comprobarCasilla(this);
             });
