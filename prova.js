@@ -59,16 +59,17 @@ function loadGame() {
     }
 
     $('.casilla').click(function (e) { 
-        comprobarCasilla(this, false);
+        comprobarCasilla(this);
         partidaAcabada();
     });
 
-    play();
+    prepararTaulell();
     return false;
     
 }
 
-function play(){
+function prepararTaulell(){
+
     if ($mida == 8) {
         $("#4-4").attr('class', 'blanc');
         $("#4-5").attr('class', 'negre');
@@ -106,14 +107,15 @@ function play(){
     $('#nomTorn').text($jugadorNegre);
 }
 
-function comprobarCasilla (casella, comprobacio) {
+function comprobarCasilla (casella) {
     
     //guardem la coordenada x i y de la casella clicada
     var posicions = $(casella).attr('id').split("-");
     var x = posicions[0];
     var y = posicions[1];
     var movimentValid = false;
-    console.log(x + '-' + y);
+    console.log(x);
+    console.log(y);
     
     var pieza = ($tornActual) ? 'blanc' : 'negre';
     var piezaContraria = (pieza == 'blanc') ? 'negre' : 'blanc';
@@ -144,17 +146,15 @@ function comprobarCasilla (casella, comprobacio) {
                     if ($('#' + comprobaFila + "-" + comprobaColumna).attr('class') == pieza && !verdTrobat) {
                         movimentValid = true;
                         
-                        if(!comprobacio){
-                            $(casella).attr('class', pieza);
-                            $(casella).unbind();
-                            for (let l = 1; l <= numPiezas; l++) {
-                                $('#' + (parseInt(x) + (i * l)) + '-' + (parseInt(y) + (j * l))).attr('class', pieza);
-                            }
-                            $('#marcador-blanc').text($('.blanc').length);
-                            $('#marcador-negre').text($('.negre').length);
-                            
-                            movimentFet = true;
+                        $(casella).attr('class', pieza);
+                        $(casella).unbind();
+                        for (let l = 1; l <= numPiezas; l++) {
+                            $('#' + (parseInt(x) + (i * l)) + '-' + (parseInt(y) + (j * l))).attr('class', pieza);
                         }
+                        $('#marcador-blanc').text($('.blanc').length);
+                        $('#marcador-negre').text($('.negre').length);
+                        
+                        movimentFet = true;
                     }
                     comprobaFila += i;
                     comprobaColumna += j;
@@ -164,22 +164,21 @@ function comprobarCasilla (casella, comprobacio) {
         }
         
     }
-    if(!comprobacio){
-        if (movimentValid) {
-            $tornActual = ($tornActual) ? false : true;
-            $('#nomTorn').text(($tornActual) ? $jugadorBlanc : $jugadorNegre);
-        }
-        else {
-            $(casella).attr('class', 'vermell');
-            $(casella).unbind();
-            setTimeout(function () {
-                $(casella).attr('class', 'casilla');
-                $(casella).click(function (e) { 
-                    comprobarCasilla(this);
-                });
-            }, 500);
-        }
+    if (movimentValid) {
+        $tornActual = ($tornActual) ? false : true;
+        $('#nomTorn').text(($tornActual) ? $jugadorBlanc : $jugadorNegre);
     }
+    else {
+        $(casella).attr('class', 'vermell');
+        $(casella).unbind();
+        setTimeout(function () {
+            $(casella).attr('class', 'casilla');
+            $(casella).click(function (e) { 
+                comprobarCasilla(this);
+            });
+        }, 500);
+    }
+    
 }
 
 function partidaAcabada(){
@@ -191,22 +190,29 @@ function partidaAcabada(){
     if(piezasBlancas == 0 || piezasNegras == 0 || piezasVerdes == 0){
         return true;
     }
+    /*
     else{
         return !movimentsPossibles();
     }
+    */
 }
 
 function movimentsPossibles(){
 
-    for (var i = 1; i <= $mida; i++) {
-        for (var j = 1; j <= $mida; j++) {
+    for (var i = 1; i <= mida; i++) {
+        for (var j = 1; i <= mida; i++) {
             
             var casella = $("#" + i + "-" + j);
-
+            
             if($(casella).attr('class') == 'casilla'){
-                comprobarCasilla(casella, true);
+                if(comprobarCasilla()){
+                    return true;
+                }
+                else{
+                    return false;
+                }
             }
+            return false;
         }        
     }
-    return false;
 }
