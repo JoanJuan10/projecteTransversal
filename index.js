@@ -1,4 +1,5 @@
 function loadGame() {
+    
     $mida = document.getElementById('mida').value;
     $jugadorNegre = document.getElementById('nomnegre').value;
     $jugadorBlanc = document.getElementById('nomblanca').value;
@@ -57,9 +58,24 @@ function loadGame() {
         }
         
     }
+    $movimentPosible = true;
 
     $('.casilla').click(function (e) { 
         comprobarCasilla(this);
+
+        $movimentPosible = false;
+
+        for (let i = 1; i <= 8; i++) {
+            for (let j = 1; j <= 8; j++) {
+                console.log(i + " " + j);
+                if (($('#' + i + '-' + j).attr('class') == 'casilla') && (comprobarCasilla($('#' + i + '-' + j), false))) {
+                    $movimentPosible = true;
+                }
+            }
+        }
+        if (!$movimentPosible) {
+            alert("Final");
+        }
     });
 
     play();
@@ -104,13 +120,14 @@ function play(){
     }
     $('#nomTorn').text($jugadorNegre);
 }
-function comprobarCasilla (casella) {
+function comprobarCasilla (casella, tirar = true) {
     
     //guardem la coordenada x i y de la casella clicada
     var posicions = $(casella).attr('id').split("-");
     var x = posicions[0];
     var y = posicions[1];
     var movimentValid = false;
+    var movimentFet = false;
     console.log(x);
     console.log(y);
     
@@ -121,13 +138,12 @@ function comprobarCasilla (casella) {
         for (let j = -1; j <= 1; j++) {
             var comprobaFila = parseInt(x) + i;
             var comprobaColumna = parseInt(y) + j;
-
+            movimentFet = false;
             if ($('#' + comprobaFila + "-" + comprobaColumna).attr('class') == piezaContraria) {
                 comprobaFila += i;
                 comprobaColumna += j;
                 var numPiezas = 0;
 
-                var movimentFet = false;
                 var verdTrobat = false;
 
                 /**
@@ -142,16 +158,17 @@ function comprobarCasilla (casella) {
 
                     if ($('#' + comprobaFila + "-" + comprobaColumna).attr('class') == pieza && !verdTrobat) {
                         movimentValid = true;
-                        
-                        $(casella).attr('class', pieza);
-                        $(casella).unbind();
-                        for (let l = 1; l <= numPiezas; l++) {
-                            $('#' + (parseInt(x) + (i * l)) + '-' + (parseInt(y) + (j * l))).attr('class', pieza);
+                        if (tirar) {
+                            $(casella).attr('class', pieza);
+                            $(casella).unbind();
+                            for (let l = 1; l <= numPiezas; l++) {
+                                $('#' + (parseInt(x) + (i * l)) + '-' + (parseInt(y) + (j * l))).attr('class', pieza);
+                            }
+                            $('#marcador-blanc').text($('.blanc').length);
+                            $('#marcador-negre').text($('.negre').length);
+                            
+                            movimentFet = true;
                         }
-                        $('#marcador-blanc').text($('.blanc').length);
-                        $('#marcador-negre').text($('.negre').length);
-                        
-                        movimentFet = true;
                     }
                     comprobaFila += i;
                     comprobaColumna += j;
@@ -161,19 +178,21 @@ function comprobarCasilla (casella) {
         }
         
     }
-    if (movimentValid) {
+    if (movimentFet) {
         $tornActual = ($tornActual) ? false : true;
         $('#nomTorn').text(($tornActual) ? $jugadorBlanc : $jugadorNegre);
     }
     else {
-        $(casella).attr('class', 'vermell');
-        $(casella).unbind();
-        setTimeout(function () {
-            $(casella).attr('class', 'casilla');
-            $(casella).click(function (e) { 
-                comprobarCasilla(this);
-            });
-        }, 500);
+        if (tirar) {
+            $(casella).attr('class', 'vermell');
+            $(casella).unbind();
+            setTimeout(function () {
+                $(casella).attr('class', 'casilla');
+                $(casella).click(function (e) { 
+                    comprobarCasilla(this);
+                });
+            }, 500);
+        }
     }
-    
+    return movimentValid;
 }
