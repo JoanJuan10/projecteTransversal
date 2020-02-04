@@ -1,5 +1,4 @@
 function loadGame() {
-    
     $mida = document.getElementById('mida').value;
     $jugadorNegre = document.getElementById('nomnegre').value;
     $jugadorBlanc = document.getElementById('nomblanca').value;
@@ -58,24 +57,10 @@ function loadGame() {
         }
         
     }
-    $movimentPosible = true;
 
     $('.casilla').click(function (e) { 
         comprobarCasilla(this);
-
-        $movimentPosible = false;
-
-        for (let i = 1; i <= 8; i++) {
-            for (let j = 1; j <= 8; j++) {
-                console.log(i + " " + j);
-                if (($('#' + i + '-' + j).attr('class') == 'casilla') && (comprobarCasilla($('#' + i + '-' + j), false))) {
-                    $movimentPosible = true;
-                }
-            }
-        }
-        if (!$movimentPosible) {
-            alert("Final");
-        }
+        partidaAcabada();
     });
 
     play();
@@ -120,14 +105,14 @@ function play(){
     }
     $('#nomTorn').text($jugadorNegre);
 }
-function comprobarCasilla (casella, tirar = true) {
+
+function comprobarCasilla (casella) {
     
     //guardem la coordenada x i y de la casella clicada
     var posicions = $(casella).attr('id').split("-");
     var x = posicions[0];
     var y = posicions[1];
     var movimentValid = false;
-    var movimentFet = false;
     console.log(x);
     console.log(y);
     
@@ -138,12 +123,13 @@ function comprobarCasilla (casella, tirar = true) {
         for (let j = -1; j <= 1; j++) {
             var comprobaFila = parseInt(x) + i;
             var comprobaColumna = parseInt(y) + j;
-            movimentFet = false;
+
             if ($('#' + comprobaFila + "-" + comprobaColumna).attr('class') == piezaContraria) {
                 comprobaFila += i;
                 comprobaColumna += j;
                 var numPiezas = 0;
 
+                var movimentFet = false;
                 var verdTrobat = false;
 
                 /**
@@ -158,17 +144,16 @@ function comprobarCasilla (casella, tirar = true) {
 
                     if ($('#' + comprobaFila + "-" + comprobaColumna).attr('class') == pieza && !verdTrobat) {
                         movimentValid = true;
-                        if (tirar) {
-                            $(casella).attr('class', pieza);
-                            $(casella).unbind();
-                            for (let l = 1; l <= numPiezas; l++) {
-                                $('#' + (parseInt(x) + (i * l)) + '-' + (parseInt(y) + (j * l))).attr('class', pieza);
-                            }
-                            $('#marcador-blanc').text($('.blanc').length);
-                            $('#marcador-negre').text($('.negre').length);
-                            
-                            movimentFet = true;
+                        
+                        $(casella).attr('class', pieza);
+                        $(casella).unbind();
+                        for (let l = 1; l <= numPiezas; l++) {
+                            $('#' + (parseInt(x) + (i * l)) + '-' + (parseInt(y) + (j * l))).attr('class', pieza);
                         }
+                        $('#marcador-blanc').text($('.blanc').length);
+                        $('#marcador-negre').text($('.negre').length);
+                        
+                        movimentFet = true;
                     }
                     comprobaFila += i;
                     comprobaColumna += j;
@@ -178,21 +163,55 @@ function comprobarCasilla (casella, tirar = true) {
         }
         
     }
-    if (movimentFet) {
+    if (movimentValid) {
         $tornActual = ($tornActual) ? false : true;
         $('#nomTorn').text(($tornActual) ? $jugadorBlanc : $jugadorNegre);
     }
     else {
-        if (tirar) {
-            $(casella).attr('class', 'vermell');
-            $(casella).unbind();
-            setTimeout(function () {
-                $(casella).attr('class', 'casilla');
-                $(casella).click(function (e) { 
-                    comprobarCasilla(this);
-                });
-            }, 500);
-        }
+        $(casella).attr('class', 'vermell');
+        $(casella).unbind();
+        setTimeout(function () {
+            $(casella).attr('class', 'casilla');
+            $(casella).click(function (e) { 
+                comprobarCasilla(this);
+            });
+        }, 500);
     }
-    return movimentValid;
+    
+}
+
+function partidaAcabada(){
+
+    var piezasBlancas = $(".blanc").length;
+    var piezasNegras = $(".negre").length;
+    var piezasVerdes = $(".casilla").length;
+
+    if(piezasBlancas == 0 || piezasNegras == 0 || piezasVerdes == 0){
+        return true;
+    }
+    /*
+    else{
+        return !movimentsPossibles();
+    }
+    */
+}
+
+function movimentsPossibles(){
+
+    for (var i = 1; i <= mida; i++) {
+        for (var j = 1; i <= mida; i++) {
+            
+            var casella = $("#" + i + "-" + j);
+            
+            if($(casella).attr('class') == 'casilla'){
+                if(comprobarCasilla()){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            return false;
+        }        
+    }
 }
