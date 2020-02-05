@@ -60,7 +60,9 @@ function loadGame() {
 
     $('.casilla').click(function (e) { 
         comprobarCasilla(this, false);
-        partidaAcabada();
+        /*if(partidaAcabada()) {
+            alert("FINAL PUTO");
+        }*/
     });
 
     play();
@@ -113,7 +115,7 @@ function comprobarCasilla (casella, comprobacio) {
     var x = posicions[0];
     var y = posicions[1];
     var movimentValid = false;
-    console.log(x + '-' + y);
+    //console.log(x + '-' + y);
     
     var pieza = ($tornActual) ? 'blanc' : 'negre';
     var piezaContraria = (pieza == 'blanc') ? 'negre' : 'blanc';
@@ -150,8 +152,10 @@ function comprobarCasilla (casella, comprobacio) {
                             for (let l = 1; l <= numPiezas; l++) {
                                 $('#' + (parseInt(x) + (i * l)) + '-' + (parseInt(y) + (j * l))).attr('class', pieza);
                             }
-                            $('#marcador-blanc').text($('.blanc').length);
-                            $('#marcador-negre').text($('.negre').length);
+                            $marcadorBlanc = $('.blanc').length;
+                            $marcadorNegre = $('.negre').length;
+                            $('#marcador-blanc').text($marcadorBlanc);
+                            $('#marcador-negre').text($marcadorNegre);
                             
                             movimentFet = true;
                         }
@@ -168,6 +172,11 @@ function comprobarCasilla (casella, comprobacio) {
         if (movimentValid) {
             $tornActual = ($tornActual) ? false : true;
             $('#nomTorn').text(($tornActual) ? $jugadorBlanc : $jugadorNegre);
+
+            if(partidaAcabada()) {
+                $('*').unbind();
+                finalizarJuego();
+            }
         }
         else {
             $(casella).attr('class', 'vermell');
@@ -178,6 +187,14 @@ function comprobarCasilla (casella, comprobacio) {
                     comprobarCasilla(this);
                 });
             }, 500);
+        }
+    }
+    else {
+        if (movimentValid) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 }
@@ -192,6 +209,7 @@ function partidaAcabada(){
         return true;
     }
     else{
+        console.log(movimentsPossibles());
         return !movimentsPossibles();
     }
 }
@@ -204,9 +222,46 @@ function movimentsPossibles(){
             var casella = $("#" + i + "-" + j);
 
             if($(casella).attr('class') == 'casilla'){
-                comprobarCasilla(casella, true);
+                if(comprobarCasilla(casella, true)) {
+                    return true;
+                }
             }
         }        
     }
     return false;
+}
+function finalizarJuego() {
+    var string = "<b>GUANYADOR</b>: " + (($(".blanc").length < $(".negre").length) ? $jugadorNegre : $jugadorBlanc) + "<br>";
+    string += "<b>PUNTUACIÓ</b>: <br>";
+    string += $jugadorBlanc + " <i>(BLANC)</i>: " + $marcadorBlanc + "<br>";
+    string += $jugadorNegre + " <i>(NEGRE)</i>: " + $marcadorNegre + "<br>";
+    $('.modal').show("fast", function () {
+        var div = $('<div>').css({
+            "display": "block",
+            "background": "rgba(0,0,0,.8)",
+            "width": "100%",
+            "min-height": "100%",
+            "position": "fixed",
+            "top": "0",
+            "left": "0",
+            "z-index": "1",
+        }).attr('class', 'overlay');
+        $('body').append(div);
+
+        $('.modal-text').html(string);
+
+        $('.close').click(function () {
+            $('.modal').hide();
+            $('.overlay').remove();
+        });
+        $('.btn-tancar').click(function () {
+            $('.modal').hide();
+            $('.overlay').remove();
+        });
+
+        $('.btn-jugar').click(function () {
+            location.reload();
+        });
+    });
+    
 }
