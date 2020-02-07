@@ -143,7 +143,7 @@ function prepararTaulell(){
     }
 
     //Mostrem el nom del jugador al que li toca jugar, al contenidor corresponent
-    $('#nomTorn').text($jugadorNegre);
+    $('#nomTorn').html('<b>' + $jugadorNegre + '</b> <i>(Negres)</i>');
 }
 
 //Funció per a comprobar si la casella clicada es correcte o no
@@ -245,7 +245,7 @@ function comprobarCasilla (casella, comprobacio) {
 
             //Canviem el torn i mostrem per pantalla el nom del jugador al que li tica tirar
             $tornActual = ($tornActual) ? false : true;
-            $('#nomTorn').text(($tornActual) ? $jugadorBlanc : $jugadorNegre);
+            $('#nomTorn').html(($tornActual) ? '<b>' + $jugadorBlanc + '</b> <i>(Blanques)</i>' : '<b>' +$jugadorNegre + '</b> <i>(Negres)</i>');
 
             //Condició: Si la la funció partidaAcabada ens retorna true
             if(partidaAcabada()) {
@@ -302,7 +302,17 @@ function partidaAcabada(){
     //Sino retornem el contrari del que ens retorna la funció movimentsPosibles
     else{
         console.log(movimentsPossibles());
-        return !movimentsPossibles();
+        if(!(movimentsPossibles())){
+
+            var tornSaltat = true;
+            $tornActual = ($tornActual) ? false : true;
+
+            if(tornSaltat == true && ! movimentsPossibles()){
+                
+                alert('TORN SALTAT');
+            }
+            return !movimentsPossibles();
+        }
     }
 }
 

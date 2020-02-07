@@ -92,7 +92,8 @@ td {
 }
 #marcador-blanc-container {
     width: 20%;
-    /*border: solid;*/
+    border: solid;
+    border-radius: 10px;
 }
 #marcador-blanc-container h1,h2 {
     text-align: center;
@@ -102,7 +103,10 @@ td {
 }
 #marcador-negre-container {
     width: 20%;
-    /*border: solid;*/
+    border: solid;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
 }
 
 
