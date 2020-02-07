@@ -54,7 +54,7 @@
     display: none;
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
+    /*margin-top: 50px;*/
     margin-bottom: 12px;
 }
 
@@ -63,12 +63,13 @@ td {
     width: 55px;
     background-color: rgb(33, 236, 33);
     text-align: center;
+    background-size: 50px;
 }
 
 
 /* IMATGES */
 .blanc, .negre, .vermell {
-    background-size: auto;
+    /*background-size: auto;*/
     background-position: center;
     background-repeat: no-repeat;
 }
