@@ -343,7 +343,7 @@ function movimentsPossibles(){
 function finalizarJuego() {
 
     //Guardem en una variable el codi HTML amb tota la informació que volem mostrar sobre la partida
-    var string = "<b>GUANYADOR</b>: " + (($(".blanc").length < $(".negre").length) ? $jugadorNegre : ($(".blanc").length > $(".negre").length) ? $jugadorBlanc : 'EMPAT') + "<br>";
+    var string = (($(".blanc").length < $(".negre").length) ? "<b>GUANYADOR</b>: " + $jugadorNegre : ($(".blanc").length > $(".negre").length) ? "<b>GUANYADOR</b>: " + $jugadorBlanc : '<b>EMPAT</b>') + "<br>";
     string += "<b>PUNTUACIÓ</b>: <br>";
     string += $jugadorBlanc + " <i>(BLANC)</i>: " + $marcadorBlanc + "<br>";
     string += $jugadorNegre + " <i>(NEGRE)</i>: " + $marcadorNegre + "<br>";
