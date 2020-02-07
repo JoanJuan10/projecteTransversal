@@ -307,9 +307,10 @@ function partidaAcabada(){
             var tornSaltat = true;
             $tornActual = ($tornActual) ? false : true;
 
-            if(tornSaltat == true && ! movimentsPossibles()){
+            if(tornSaltat == true && movimentsPossibles()){
                 
                 alert('TORN SALTAT');
+                $('#nomTorn').html(($tornActual) ? '<b>' + $jugadorBlanc + '</b> <i>(Blanques)</i>' : '<b>' +$jugadorNegre + '</b> <i>(Negres)</i>');
             }
             return !movimentsPossibles();
         }
